@@ -50,11 +50,11 @@ const transformKeyArrayToBytes = (transformKey: any): TransformKey => ({
  * of objects going in to normal arrays (which can be successfully serialized) as well as converting array values coming out of Rust from normal arrays
  * into Uint8Arrays.
  */
-export class Api256 {
-    private api: Recrypt.Api256;
+export class Api480 {
+    private api: Recrypt.Api480;
 
     constructor() {
-        this.api = new Recrypt.Api256();
+        this.api = new Recrypt.Api480();
     }
 
     /**

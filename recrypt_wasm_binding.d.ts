@@ -37,7 +37,7 @@ export interface TransformKey {
     publicSigningKey: PublicSigningKey;
     signature: Uint8Array;
 }
-export class Api256 {
+export class Api480 {
     constructor();
     generateKeyPair(): KeyPair;
     generateEd25519KeyPair(): SigningKeyPair;

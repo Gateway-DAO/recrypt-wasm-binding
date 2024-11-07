@@ -6,7 +6,7 @@ let entry;
 let includeAssets = [];
 
 if (process.env.WEBPACK_MODE === "test") {
-    entry = "./lib/tests/Api256Shim.test.ts";
+    entry = "./lib/tests/Api480Shim.test.ts";
     includeAssets = [
         {path: "https://unpkg.com/mocha@5.2.0/mocha.css", type: "css"},
         {path: "https://www.chaijs.com/chai.js", type: "js", external: {packageName: "chai", variableName: "chai"}},

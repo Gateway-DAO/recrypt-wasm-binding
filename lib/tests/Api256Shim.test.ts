@@ -17,11 +17,11 @@ const reporterDiv = document.createElement("div");
 reporterDiv.id = "mocha";
 document.body.appendChild(reporterDiv);
 
-import("../Api256Shim").then((Recrypt) => {
-    const api = new Recrypt.Api256();
+import("../Api480Shim").then((Recrypt) => {
+    const api = new Recrypt.Api480();
 
     describe("Recrypt", () => {
-        describe("Api256", () => {
+        describe("Api480", () => {
             after(() => {
                 const completeDiv = document.createElement("div");
                 completeDiv.id = "mocha_complete";

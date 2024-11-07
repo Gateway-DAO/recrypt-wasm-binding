@@ -16,7 +16,7 @@ const arrayEq = (a, b) => {
 
 // example CRA usage
 function App() {
-    const recryptApi = new Recrypt.Api256();
+    const recryptApi = new Recrypt.Api480();
 
     //Generate both a user key pair and a signing key pair
     const keys = recryptApi.generateKeyPair();

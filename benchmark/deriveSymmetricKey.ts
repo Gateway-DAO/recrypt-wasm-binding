@@ -1,7 +1,7 @@
 declare const Benchmark: any;
 
-export default (Recrypt: typeof import("../lib/Api256Shim"), logResult: (results: string) => void) => {
-    const api = new Recrypt.Api256();
+export default (Recrypt: typeof import("../lib/Api480Shim"), logResult: (results: string) => void) => {
+    const api = new Recrypt.Api480();
 
     let plaintext: Uint8Array;
 
