@@ -24,7 +24,7 @@ function logBenchmarkResult(result: string) {
     resultsDiv.appendChild(resultUI);
 }
 
-import("../lib/Api256Shim").then((Recrypt) => {
+import("../lib/Api480Shim").then((Recrypt) => {
     logBenchmarkResult("Starting Benchmarks");
     const genKeyPairBenchmark = generateKeyPair(Recrypt, logBenchmarkResult);
     const genEd25519KeyPairbenchmark = generateEd25519KeyPair(Recrypt, logBenchmarkResult);

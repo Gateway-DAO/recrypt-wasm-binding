@@ -17,11 +17,11 @@ const reporterDiv = document.createElement("div");
 reporterDiv.id = "mocha";
 document.body.appendChild(reporterDiv);
 
-import("../Api256Shim").then((Recrypt) => {
-    const api = new Recrypt.Api256();
+import("../Api480Shim").then((Recrypt) => {
+    const api = new Recrypt.Api480();
 
     describe("Recrypt", () => {
-        describe("Api256", () => {
+        describe("Api480", () => {
             after(() => {
                 const completeDiv = document.createElement("div");
                 completeDiv.id = "mocha_complete";
@@ -419,7 +419,7 @@ import("../Api256Shim").then((Recrypt) => {
                     const serverKeys = api.generateKeyPair();
                     const message = new Uint8Array(20);
 
-                    const augmentedPublicKey = Recrypt.augmentPublicKey256(userKeys.publicKey, serverKeys.publicKey);
+                    const augmentedPublicKey = Recrypt.augmentPublicKey480(userKeys.publicKey, serverKeys.publicKey);
 
                     const signature = api.schnorrSign(userKeys.privateKey, augmentedPublicKey, message);
 
@@ -463,20 +463,20 @@ import("../Api256Shim").then((Recrypt) => {
             });
         });
 
-        describe("transformKeyToBytes256", () => {
+        describe("transformKeyToBytes480", () => {
             it("converts a transform key into bytes", () => {
                 const fromPrivateKey = api.generateKeyPair().privateKey;
                 const toPublicKey = api.generateKeyPair().publicKey;
 
                 const transformKey = api.generateTransformKey(fromPrivateKey, toPublicKey, privateSigningKey);
 
-                const transformKeyBytes = Recrypt.transformKeyToBytes256(transformKey);
+                const transformKeyBytes = Recrypt.transformKeyToBytes480(transformKey);
                 expect(transformKeyBytes).to.be.a("Uint8Array");
                 expect(transformKeyBytes).to.have.lengthOf(672);
             });
         });
 
-        describe("augmentTransformKey256", () => {
+        describe("augmentTransformKey480", () => {
             it("returns an augmented transform key", () => {
                 const fromPrivateKey = api.generateKeyPair().privateKey;
                 const toPublicKey = api.generateKeyPair().publicKey;
@@ -484,7 +484,7 @@ import("../Api256Shim").then((Recrypt) => {
 
                 const transformKey = api.generateTransformKey(fromPrivateKey, toPublicKey, privateSigningKey);
 
-                const augTransformKey = Recrypt.augmentTransformKey256(transformKey, augPrivateKey);
+                const augTransformKey = Recrypt.augmentTransformKey480(transformKey, augPrivateKey);
 
                 expect(augTransformKey).to.be.a("object");
                 expect(Object.keys(augTransformKey)).to.have.lengthOf(6);
@@ -510,12 +510,12 @@ import("../Api256Shim").then((Recrypt) => {
             });
         });
 
-        describe("augmentPublicKey256", () => {
+        describe("augmentPublicKey480", () => {
             it("augments the provided public key", () => {
                 const pub1 = api.generateKeyPair().publicKey;
                 const pub2 = api.generateKeyPair().publicKey;
 
-                const augPublicKey = Recrypt.augmentPublicKey256(pub1, pub2);
+                const augPublicKey = Recrypt.augmentPublicKey480(pub1, pub2);
 
                 expect(augPublicKey).to.be.a("object");
                 expect(Object.keys(augPublicKey)).to.have.lengthOf(2);

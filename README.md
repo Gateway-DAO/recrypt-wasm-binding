@@ -21,18 +21,18 @@ The following examples show how to use this library from a browser-based web app
 import * as Recrypt from "@ironcorelabs/recrypt-wasm-binding";
 
 //Create a new Recrypt API instance
-const Api256 = new Recrypt.Api256();
+const Api480 = new Recrypt.Api480();
 
 //Generate both a user key pair and a signing key pair
-const keys = Api256.generateKeyPair();
-const signingKeys = Api256.generateEd25519KeyPair();
+const keys = Api480.generateKeyPair();
+const signingKeys = Api480.generateEd25519KeyPair();
 
 //Generate a plaintext to encrypt
-const plaintext = Api256.generatePlaintext();
+const plaintext = Api480.generatePlaintext();
 
 //Encrypt the data to the public key and then attempt to decrypt with the private key
-const encryptedValue = Api256.encrypt(plaintext, keys.publicKey, signingKeys.privateKey);
-const decryptedValue = Api256.decrypt(encryptedValue, keys.privateKey);
+const encryptedValue = Api480.encrypt(plaintext, keys.publicKey, signingKeys.privateKey);
+const decryptedValue = Api480.decrypt(encryptedValue, keys.privateKey);
 
 decryptedValue === plaintext; //true
 ```
@@ -43,30 +43,30 @@ decryptedValue === plaintext; //true
 import * as Recrypt from "@ironcorelabs/recrypt-wasm-binding";
 
 //Create a new Recrypt API instance
-const Api256 = new Recrypt.Api256();
+const Api480 = new Recrypt.Api480();
 
 //Generate both a user key pair and a signing key pair
-const userKeys = Api256.generateKeyPair();
-const signingKeys = Api256.generateEd25519KeyPair();
+const userKeys = Api480.generateKeyPair();
+const signingKeys = Api480.generateEd25519KeyPair();
 
 //Generate a plaintext to encrypt
-const plaintext = Api256.generatePlaintext();
+const plaintext = Api480.generatePlaintext();
 
 //Encrypt the data to the user public key
-const encryptedValue = Api256.encrypt(plaintext, userKeys.publicKey, signingKeys.privateKey);
+const encryptedValue = Api480.encrypt(plaintext, userKeys.publicKey, signingKeys.privateKey);
 
 //Generate a second public/private key pair as the target of the transform. This will allow the encrypted data to be
 //transformed to this second key pair and allow it to be decrypted.
-const deviceKeys = Api256.generateKeyPair();
+const deviceKeys = Api480.generateKeyPair();
 
 //Generate a transform key from the user private key to the device public key
-const userToDeviceTransformKey = Api256.generateTransformKey(userKeys.privateKey, deviceKeys.publicKey, signingKeys.privateKey);
+const userToDeviceTransformKey = Api480.generateTransformKey(userKeys.privateKey, deviceKeys.publicKey, signingKeys.privateKey);
 
 //Transform the encrypted data (without decrypting it!) so that it can be decrypted with the second key pair
-const transformedEncryptedValue = Api256.transform(encryptedValue, userToDeviceTransformKey, signingKeys.privateKey);
+const transformedEncryptedValue = Api480.transform(encryptedValue, userToDeviceTransformKey, signingKeys.privateKey);
 
 //Decrypt the data using the second private key
-const decryptedValue = Api256.decrypt(transformedEncryptedValue, deviceKeys.privateKey);
+const decryptedValue = Api480.decrypt(transformedEncryptedValue, deviceKeys.privateKey);
 
 decryptedValue === plaintext; //true
 ```

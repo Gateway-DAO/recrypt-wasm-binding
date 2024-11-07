@@ -47,13 +47,13 @@ fs.writeFileSync("./pkg/.npmignore", "");
 shell.cp("./recrypt_wasm_binding.d.ts", "./pkg");
 
 //Compile our wasm-bindgen shim from TS to ES6 JS
-shell.exec("./node_modules/typescript/bin/tsc --lib es6 --target ES2015 --sourceMap false --module esnext --outDir ./pkg lib/Api256Shim.ts");
+shell.exec("./node_modules/typescript/bin/tsc --lib es6 --target ES2015 --sourceMap false --module esnext --outDir ./pkg lib/Api480Shim.ts");
 //Tweak wasm-bindgen import location since we moved the file to the same directory as the wasm-bindgen produced shim
-shell.sed("-i", `from "../target/`, `from "./`, "./pkg/Api256Shim.js");
+shell.sed("-i", `from "../target/`, `from "./`, "./pkg/Api480Shim.js");
 
 //We need to tweak the wasm-pack generated package.json file since we have our own shim that fronts wasm-bindgen
 const generatedPackageJson = require("./pkg/package.json");
-generatedPackageJson.main = "Api256Shim.js";
+generatedPackageJson.main = "Api480Shim.js";
 delete generatedPackageJson.module;
 delete generatedPackageJson.files;
 generatedPackageJson.types = "recrypt_wasm_binding.d.ts";

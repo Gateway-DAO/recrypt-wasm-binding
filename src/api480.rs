@@ -17,15 +17,15 @@ use std::sync::Mutex;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub struct Api256 {
+pub struct Api480 {
     api: Recrypt<Sha256, Ed25519, RandomBytes<DefaultRng>>,
 }
 
 #[wasm_bindgen]
-impl Api256 {
+impl Api480 {
     #[wasm_bindgen(constructor)]
-    pub fn new() -> Api256 {
-        Api256 {
+    pub fn new() -> Api480 {
+        Api480 {
             api: Recrypt::new(),
         }
     }
@@ -376,7 +376,7 @@ impl EncryptedSearch {
  * in a specific order in order for transform keys to be signed over.
  */
 #[wasm_bindgen]
-pub fn transformKeyToBytes256(transform_key_obj: &JsValue) -> Result<Vec<u8>, JsError> {
+pub fn transformKeyToBytes480(transform_key_obj: &JsValue) -> Result<Vec<u8>, JsError> {
     let transform_key_js: util::JsTransformKey =
         transform_key_obj.into_serde().map_err(WasmError::new)?;
     Ok(util::js_object_to_transform_key(transform_key_js)?.to_bytes())
@@ -386,7 +386,7 @@ pub fn transformKeyToBytes256(transform_key_obj: &JsValue) -> Result<Vec<u8>, Js
  * Augment the provided transform key with the provided private key. Returns an augmented TransformKey object.
  */
 #[wasm_bindgen]
-pub fn augmentTransformKey256(
+pub fn augmentTransformKey480(
     transform_key_obj: &JsValue,
     private_key: &[u8],
 ) -> Result<JsValue, JsError> {
@@ -409,7 +409,7 @@ pub fn augmentTransformKey256(
  * Augment the provided public key with the other provided public key. Returns a new augmented PublicKey object.
  */
 #[wasm_bindgen]
-pub fn augmentPublicKey256(
+pub fn augmentPublicKey480(
     current_public_key_obj: &JsValue,
     other_public_key_obj: &JsValue,
 ) -> Result<JsValue, JsError> {

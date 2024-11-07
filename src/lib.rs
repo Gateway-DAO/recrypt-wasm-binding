@@ -4,5 +4,5 @@ extern crate rand;
 extern crate recrypt;
 extern crate wasm_bindgen;
 
-pub mod api256;
+pub mod api480;
 mod util;

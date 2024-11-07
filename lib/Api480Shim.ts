@@ -50,11 +50,11 @@ const transformKeyArrayToBytes = (transformKey: any): TransformKey => ({
  * of objects going in to normal arrays (which can be successfully serialized) as well as converting array values coming out of Rust from normal arrays
  * into Uint8Arrays.
  */
-export class Api256 {
-    private api: Recrypt.Api256;
+export class Api480 {
+    private api: Recrypt.Api480;
 
     constructor() {
-        this.api = new Recrypt.Api256();
+        this.api = new Recrypt.Api480();
     }
 
     /**
@@ -239,19 +239,19 @@ export class Api256 {
 /**
  * Convert the provided TransformKey object into a single Uint8Array of bytes in a consistent order
  */
-export const transformKeyToBytes256 = (transformKey: TransformKey): Uint8Array => Recrypt.transformKeyToBytes256(transformKeyBytesToArray(transformKey));
+export const transformKeyToBytes480 = (transformKey: TransformKey): Uint8Array => Recrypt.transformKeyToBytes480(transformKeyBytesToArray(transformKey));
 
 /**
  * Augment the provided transform key object with the provided private key. Returns a new, augmented TransformKey
  */
-export const augmentTransformKey256 = (transformKey: TransformKey, privateKey: PrivateKey): TransformKey =>
-    transformKeyArrayToBytes(Recrypt.augmentTransformKey256(transformKeyBytesToArray(transformKey), privateKey));
+export const augmentTransformKey480 = (transformKey: TransformKey, privateKey: PrivateKey): TransformKey =>
+    transformKeyArrayToBytes(Recrypt.augmentTransformKey480(transformKeyBytesToArray(transformKey), privateKey));
 
 /**
  * Augment the provided public key object with another public key object. Returns the augmented PublicKey.
  */
-export const augmentPublicKey256 = (currentPublicKey: PublicKey, otherPublicKey: PublicKey): PublicKey => {
-    const augmentedKey = Recrypt.augmentPublicKey256(publicKeyBytesToArray(currentPublicKey), publicKeyBytesToArray(otherPublicKey));
+export const augmentPublicKey480 = (currentPublicKey: PublicKey, otherPublicKey: PublicKey): PublicKey => {
+    const augmentedKey = Recrypt.augmentPublicKey480(publicKeyBytesToArray(currentPublicKey), publicKeyBytesToArray(otherPublicKey));
     return publicKeyArrayToBytes(augmentedKey);
 };
 

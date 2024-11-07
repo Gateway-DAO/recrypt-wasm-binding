@@ -37,7 +37,7 @@ export interface TransformKey {
     publicSigningKey: PublicSigningKey;
     signature: Uint8Array;
 }
-export class Api256 {
+export class Api480 {
     constructor();
     generateKeyPair(): KeyPair;
     generateEd25519KeyPair(): SigningKeyPair;
@@ -61,8 +61,8 @@ export class EncryptedSearch {
     generateHashesForStringWithPadding(s: string, salt: Uint8Array, partitionId?: string): Uint32Array;
     static transliterateString(s: string): string;
 }
-export function transformKeyToBytes256(transformKey: TransformKey): Uint8Array;
-export function augmentTransformKey256(transformKey: TransformKey, privateKey: PrivateKey): TransformKey;
-export function augmentPublicKey256(currentPublicKey: PublicKey, otherPublicKey: PublicKey): PublicKey;
+export function transformKeyToBytes480(transformKey: TransformKey): Uint8Array;
+export function augmentTransformKey480(transformKey: TransformKey, privateKey: PrivateKey): TransformKey;
+export function augmentPublicKey480(currentPublicKey: PublicKey, otherPublicKey: PublicKey): PublicKey;
 export function addPrivateKeys(privateKeyA: Uint8Array, privateKeyB: Uint8Array): Uint8Array;
 export function subtractPrivateKeys(privateKeyA: Uint8Array, privateKeyB: Uint8Array): Uint8Array;
