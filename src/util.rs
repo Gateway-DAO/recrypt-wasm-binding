@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 use recrypt::{
-    api::{
+    api_480::{
         AuthHash, Ed25519Signature, EncryptedMessage, EncryptedTempKey, EncryptedValue,
         HashedValue, PrivateKey, PublicKey, PublicSigningKey, SigningKeypair, TransformBlock,
         TransformKey,
@@ -33,7 +33,8 @@ pub struct JsPublicKey {
 
 #[derive(Serialize)]
 pub struct JsKeyPair {
-    pub privateKey: [u8; 32],
+    #[serde(with = "serde_arrays")]
+    pub privateKey: [u8; 60],
     pub publicKey: JsPublicKey,
 }
 
@@ -94,12 +95,18 @@ macro_rules! slice_to_fixed_bytes { ($($fn_name: ident, $slice_type: ty, $n: exp
 // Use the macro to generate the various fixed length array types
 slice_to_fixed_bytes! {
     slice_to_fixed_32_bytes, &[u8], 32;
+    slice_to_fixed_60_bytes, &[u8], 60;
     slice_to_fixed_64_bytes, &[u8], 64;
+    slice_to_fixed_120_bytes, &[u8], 120;
     slice_to_fixed_384_bytes, &[u8], 384;
+    slice_to_fixed_720_bytes, &[u8], 720;
     vector_to_fixed_32_bytes, &Vec<u8>, 32;
+    vector_to_fixed_60_bytes, &Vec<u8>, 60;
     vector_to_fixed_64_bytes, &Vec<u8>, 64;
     vector_to_fixed_128_bytes, &Vec<u8>, 128;
-    vector_to_fixed_384_bytes, &Vec<u8>, 384
+    vector_to_fixed_240_bytes, &Vec<u8>, 240;
+    vector_to_fixed_384_bytes, &Vec<u8>, 384;
+    vector_to_fixed_720_bytes, &Vec<u8>, 720
 }
 
 /**
@@ -139,8 +146,8 @@ pub fn signing_keys_to_js_object(signing_key_pair: SigningKeypair) -> JsSigningK
  */
 pub fn js_object_to_public_key(public_key_obj: &JsPublicKey) -> Result<PublicKey, JsError> {
     Ok(PublicKey::new((
-        vector_to_fixed_32_bytes(&public_key_obj.x, "publicKey.x"),
-        vector_to_fixed_32_bytes(&public_key_obj.y, "publicKey.y"),
+        vector_to_fixed_60_bytes(&public_key_obj.x, "publicKey.x"),
+        vector_to_fixed_60_bytes(&public_key_obj.y, "publicKey.y"),
     ))
     .map_err(WasmError::new)?)
 }
@@ -152,11 +159,11 @@ pub fn js_object_to_transform_key(js_object: JsTransformKey) -> Result<Transform
     Ok(TransformKey::new(
         js_object_to_public_key(&js_object.ephemeralPublicKey)?,
         js_object_to_public_key(&js_object.toPublicKey)?,
-        EncryptedTempKey::new(vector_to_fixed_384_bytes(
+        EncryptedTempKey::new(vector_to_fixed_720_bytes(
             &js_object.encryptedTempKey,
             "encryptedTempKey",
         )),
-        HashedValue::new(vector_to_fixed_128_bytes(
+        HashedValue::new(vector_to_fixed_240_bytes(
             &js_object.hashedTempKey,
             "hashedTempKey",
         ))
@@ -194,12 +201,12 @@ pub fn js_object_to_transform_blocks(
         .map(|block| {
             Ok(TransformBlock::new(
                 &js_object_to_public_key(&block.publicKey)?,
-                &EncryptedTempKey::new(vector_to_fixed_384_bytes(
+                &EncryptedTempKey::new(vector_to_fixed_720_bytes(
                     &block.encryptedTempKey,
                     "transformBlock.encryptedTempKey",
                 )),
                 &js_object_to_public_key(&block.randomTransformPublicKey)?,
-                &EncryptedTempKey::new(vector_to_fixed_384_bytes(
+                &EncryptedTempKey::new(vector_to_fixed_720_bytes(
                     &block.randomTransformEncryptedTempKey,
                     "transformBlock.randomTransformEncryptedTempKey",
                 )),
@@ -240,7 +247,7 @@ pub fn js_object_to_encrypted_value(
     js_object: JsEncryptedValue,
 ) -> Result<EncryptedValue, JsError> {
     let ephemeral_public_key = js_object_to_public_key(&js_object.ephemeralPublicKey)?;
-    let encrypted_message = EncryptedMessage::new(vector_to_fixed_384_bytes(
+    let encrypted_message = EncryptedMessage::new(vector_to_fixed_720_bytes(
         &js_object.encryptedMessage,
         "encryptedMessage",
     ));

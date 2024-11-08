@@ -154,13 +154,6 @@ export class Api480 {
     }
 
     /**
-     * Generate a new Recrypt plaintext
-     */
-    generatePlaintext(): Uint8Array {
-        return this.api.generatePlaintext();
-    }
-
-    /**
      * Generate a transform key from the provided private key to the provided public key.
      */
     generateTransformKey(fromPrivateKey: Uint8Array, toPublicKey: PublicKey, privateSigningKey: Uint8Array): TransformKey {
@@ -264,9 +257,3 @@ export const addPrivateKeys = (privateKeyA: Uint8Array, privateKeyB: Uint8Array)
  * Create a new private key by subtracting the provided private keys.
  */
 export const subtractPrivateKeys = (privateKeyA: Uint8Array, privateKeyB: Uint8Array): Uint8Array => Recrypt.subtractPrivateKeys(privateKeyA, privateKeyB);
-
-
-/**
- * Export the entire EncryptedSearch struct out directly. No need to shim this at any level.
- */
-export const EncryptedSearch = Recrypt.EncryptedSearch;
